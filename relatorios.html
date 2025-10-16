@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios | RegimeSync</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar-collapsed {
+            width: 80px;
+        }
+        .sidebar-expanded {
+            width: 250px;
+        }
+        .main-content {
+            transition: margin-left 0.3s ease;
+        }
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar sidebar-expanded bg-dark text-white h-screen fixed">
+        <div class="p-4 flex items-center justify-between border-b border-gray-700">
+            <div class="flex items-center">
+                <i data-feather="users" class="h-6 w-6 text-primary"></i>
+                <span class="ml-2 font-bold">RegimeSync</span>
+            </div>
+            <button id="toggleSidebar" class="text-gray-400 hover:text-white">
+                <i data-feather="chevron-left" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="index.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="home" class="w-5 h-5"></i>
+                        <span class="ml-3">Página Inicial</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="dashboard.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+<i data-feather="home" class="w-5 h-5"></i>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="metodologia.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="book" class="w-5 h-5"></i>
+                        <span class="ml-3">Metodologia</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="equipe.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="users" class="w-5 h-5"></i>
+                        <span class="ml-3">Minha Equipe</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reunioes.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="calendar" class="w-5 h-5"></i>
+                        <span class="ml-3">Reuniões</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="relatorios.html" class="flex items-center p-2 rounded-lg bg-primary text-white">
+                        <i data-feather="bar-chart-2" class="w-5 h-5"></i>
+                        <span class="ml-3">Relatórios</span>
+                    </a>
+                </li>
+            </ul>
+</nav>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content ml-64 flex-1">
+        <!-- Top Bar -->
+        <header class="bg-white shadow-sm">
+            <div class="flex justify-between items-center px-6 py-4">
+                <h1 class="text-xl font-bold text-dark">Relatórios</h1>
+                <div class="flex items-center space-x-4">
+                    <button id="notificationsButton" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+                        <i data-feather="bell" class="w-5 h-5 text-gray-600"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full overflow-hidden bg-primary flex items-center justify-center text-white">
+                            <span>US</span>
+                        </div>
+                        <span class="ml-2 text-sm font-medium">Usuário</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="p-6">
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div>
+                            <label for="reportType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Relatório</label>
+                            <select id="reportType" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                                <option>Todos</option>
+                                <option>Engajamento</option>
+                                <option>Produtividade</option>
+                                <option>Reuniões</option>
+                                <option>Feedback</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="timePeriod" class="block text-sm font-medium text-gray-700 mb-1">Período</label>
+                            <select id="timePeriod" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                                <option>Últimos 7 dias</option>
+                                <option>Últimos 30 dias</option>
+                                <option>Últimos 90 dias</option>
+                                <option>Este mês</option>
+                                <option>Personalizado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="bg-primary hover:bg-blue-600 text-white px-4 py-2 h-10 rounded-lg flex items-center">
+                        <i data-feather="filter" class="mr-2"></i>
+                        Aplicar Filtros
+                    </button>
+                </div>
+            </div>
+
+            <!-- Report Cards -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="report-card bg-white rounded-lg shadow-sm p-6 transition">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-dark">Engajamento da Equipe</h3>
+                        <button class="text-primary hover:text-blue-700 text-sm font-medium flex items-center">
+                            Exportar
+                            <i data-feather="download" class="ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <canvas id="engagementReportChart" height="250"></canvas>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p>O engajamento médio da equipe neste período foi de <span class="font-bold text-primary">84%</span>, acima da média histórica de 78%.</p>
+                    </div>
+                </div>
+
+                <div class="report-card bg-white rounded-lg shadow-sm p-6 transition">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-dark">Status das Reuniões</h3>
+                        <button class="text-primary hover:text-blue-700 text-sm font-medium flex items-center">
+                            Exportar
+                            <i data-feather="download" class="ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <canvas id="meetingsReportChart" height="250"></canvas>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p><span class="font-bold text-green-500">92%</span> das reuniões foram realizadas conforme planejado.</p>
+                    </div>
+                </div>
+
+                <div class="report-card bg-white rounded-lg shadow-sm p-6 transition">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-dark">Nível de Energia</h3>
+                        <button class="text-primary hover:text-blue-700 text-sm font-medium flex items-center">
+                            Exportar
+                            <i data-feather="download" class="ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <canvas id="energyReportChart" height="250"></canvas>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p>Média de energia: <span class="font-bold text-yellow-500">7.2/10</span>. <span class="text-green-500">+0.8</span> desde o último período.</p>
+                    </div>
+                </div>
+
+                <div class="report-card bg-white rounded-lg shadow-sm p-6 transition">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-dark">Feedback dos Colaboradores</h3>
+                        <button class="text-primary hover:text-blue-700 text-sm font-medium flex items-center">
+                            Exportar
+                            <i data-feather="download" class="ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Clareza de Direção</span>
+                                <span>8.4/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 84%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Suporte da Gestão</span>
+                                <span>7.9/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 79%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Satisfação no Trabalho</span>
+                                <span>8.1/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 81%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Bem-estar</span>
+                                <span>7.5/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Report -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+                <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="font-bold text-dark">Relatório Detalhado de Reuniões</h3>
+                    <button class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i data-feather="download" class="mr-2"></i>
+                        Exportar para Excel
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Colaborador</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Energia</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prioridades</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Obstáculos</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feedback</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03/06/2023</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img src="http://static.photos/people/200x200/1" alt="" class="h-10 w-10 rounded-full">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">João Silva</div>
+                                            <div class="text-sm text-gray-500">Desenvolvedor Sênior</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">8/10</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Finalizar módulo de autenticação</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Dependência da equipe de design</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    "Mais alinhamento com outras equipes"
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03/06/2023</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img src="http://static.photos/people/200x200/2" alt="" class="h-10 w-10 rounded-full">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Maria Souza</div>
+                                            <div class="text-sm text-gray-500">Designer UX</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">6/10</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Prototipar novo fluxo</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Múltiplas demandas simultâneas</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    "Priorização mais clara"
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">02/06/2023</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img src="http://static.photos/people/200x200/3" alt="" class="h-10 w-10 rounded-full">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Carlos Oliveira</div>
+                                            <div class="text-sm text-gray-500">Gerente de Projetos</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">9/10</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Acompanhar sprint atual</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Nenhum bloqueio significativo</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    "Ótimo suporte"
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Anterior </a>
+                        <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Próximo </a>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">Mostrando <span class="font-medium">1</span> a <span class="font-medium">3</span> de <span class="font-medium">24</span> resultados</p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"> <span class="sr-only">Previous</span> <i data-feather="chevron-left" class="h-5 w-5"></i> </a>
+                                <a href="#" aria-current="page" class="z-10 bg-primary border-primary text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 1 </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 2 </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 3 </a>
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"> <span class="sr-only">Next</span> <i data-feather="chevron-right" class="h-5 w-5"></i> </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (sidebar.classList.contains('sidebar-expanded')) {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                mainContent.classList.add('ml-20');
+                mainContent.classList.remove('ml-64');
+                this.innerHTML = '<i data-feather="chevron-right" class="w-5 h-5"></i>';
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                mainContent.classList.remove('ml-20');
+                mainContent.classList.add('ml-64');
+                this.innerHTML = '<i data-feather="chevron-left" class="w-5 h-5"></i>';
+            }
+            
+            feather.replace();
+        });
+
+        // Charts
+        const engagementReportCtx = document.getElementById('engagementReportChart').getContext('2d');
+        const engagementReportChart = new Chart(engagementReportCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [{
+                    label: 'Engajamento',
+                    data: [72, 75, 78, 80, 82, 84],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 50,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        const meetingsReportCtx = document.getElementById('meetingsReportChart').getContext('2d');
+        const meetingsReportChart = new Chart(meetingsReportCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Realizadas', 'Pendentes', 'Canceladas'],
+                datasets: [{
+                    data: [92, 5, 3],
+                    backgroundColor: [
+                        '#10B981',
+                        '#F59E0B',
+                        '#EF4444'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        const energyReportCtx = document.getElementById('energyReportChart').getContext('2d');
+        const energyReportChart = new Chart(energyReportCtx, {
+            type: 'bar',
+            data: {
+                labels: ['João', 'Maria', 'Carlos', 'Ana', 'Pedro'],
+                datasets: [{
+                    label: 'Energia',
+                    data: [8, 6, 9, 7, 6],
+                    backgroundColor: [
+                        '#F59E0B',
+                        '#F59E0B',
+                        '#F59E0B',
+                        '#F59E0B',
+                        '#F59E0B'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+
+        // Button event listener
+        document.getElementById('notificationsButton').addEventListener('click', function() {
+            alert('Notificações serão mostradas aqui');
+        });
+
+        feather.replace();
+    </script>
+</body>
+</html>

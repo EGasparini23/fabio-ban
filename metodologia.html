@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodologia | RegimeSync</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar-collapsed {
+            width: 80px;
+        }
+        .sidebar-expanded {
+            width: 250px;
+        }
+        .main-content {
+            transition: margin-left 0.3s ease;
+        }
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased flex">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar sidebar-expanded bg-dark text-white h-screen fixed">
+        <div class="p-4 flex items-center justify-between border-b border-gray-700">
+            <div class="flex items-center">
+                <i data-feather="users" class="h-6 w-6 text-primary"></i>
+                <span class="ml-2 font-bold">RegimeSync</span>
+            </div>
+            <button id="toggleSidebar" class="text-gray-400 hover:text-white">
+                <i data-feather="chevron-left" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="index.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="home" class="w-5 h-5"></i>
+                        <span class="ml-3">Página Inicial</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="dashboard.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+<i data-feather="home" class="w-5 h-5"></i>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="metodologia.html" class="flex items-center p-2 rounded-lg bg-primary text-white">
+                        <i data-feather="book" class="w-5 h-5"></i>
+                        <span class="ml-3">Metodologia</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="equipe.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="users" class="w-5 h-5"></i>
+                        <span class="ml-3">Minha Equipe</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reunioes.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="calendar" class="w-5 h-5"></i>
+                        <span class="ml-3">Reuniões</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="relatorios.html" class="flex items-center p-2 rounded-lg text-gray-300 hover:bg-gray-700">
+                        <i data-feather="bar-chart-2" class="w-5 h-5"></i>
+                        <span class="ml-3">Relatórios</span>
+                    </a>
+                </li>
+            </ul>
+</nav>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content ml-64 flex-1">
+        <!-- Top Bar -->
+        <header class="bg-white shadow-sm">
+            <div class="flex justify-between items-center px-6 py-4">
+                <h1 class="text-xl font-bold text-dark">Metodologia 15/5</h1>
+                <div class="flex items-center space-x-4">
+                    <button id="notificationsButton" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+<i data-feather="bell" class="w-5 h-5 text-gray-600"></i>
+                    </button>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full overflow-hidden bg-primary flex items-center justify-center text-white">
+                            <span>US</span>
+                        </div>
+                        <span class="ml-2 text-sm font-medium">Usuário</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="p-6">
+            <div class="bg-white rounded-lg shadow p-6 mb-8">
+                <h2 class="text-2xl font-bold text-dark mb-4">O Método 15/5</h2>
+                <p class="text-gray-600 mb-6">
+                    O Regime 15/5 é uma abordagem simples e eficaz para gestão de pessoas que transforma reuniões individuais
+                    em conversas poderosas e produtivas. Em apenas 15 minutos semanais, você cria conexões mais humanas
+                    com seus colaboradores e obtém insights valiosos.
+                </p>
+                <div class="bg-blue-50 border border-primary rounded-lg p-4">
+                    <div class="flex">
+                        <i data-feather="info" class="text-primary mr-3"></i>
+                        <p class="text-gray-700">
+                            A metodologia foi desenvolvida com base em pesquisas de psicologia organizacional e comunicação
+                            não-violenta, comprovadamente eficaz para aumentar o engajamento e a produtividade.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-6 mb-12">
+                <div class="step-card bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <span class="text-primary font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="font-bold text-dark mb-2">Energia</h3>
+                    <p class="text-sm text-gray-600">Comece perguntando como está a energia do colaborador (de 1 a 10). Isso abre espaço para vulnerabilidade e conexão humana.</p>
+                </div>
+                
+                <div class="flex items-center justify-center">
+                    <i data-feather="arrow-right" class="text-gray-400"></i>
+                </div>
+                
+                <div class="step-card bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <span class="text-secondary font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="font-bold text-dark mb-2">Prioridades</h3>
+                    <p class="text-sm text-gray-600">Identifique as 2-3 prioridades mais importantes para a semana. Foco no essencial.</p>
+                </div>
+                
+                <div class="flex items-center justify-center">
+                    <i data-feather="arrow-right" class="text-gray-400"></i>
+                </div>
+                
+                <div class="step-card bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md">
+                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <span class="text-purple-600 font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="font-bold text-dark mb-2">Obstáculos</h3>
+                    <p class="text-sm text-gray-600">Descubra o que está impedindo o progresso. Como gestor, seu papel é remover esses bloqueios.</p>
+                </div>
+                
+                <div class="flex items-center justify-center">
+                    <i data-feather="arrow-right" class="text-gray-400"></i>
+                </div>
+                
+                <div class="step-card bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <span class="text-yellow-500 font-bold text-xl">4</span>
+                    </div>
+                    <h3 class="font-bold text-dark mb-2">Aprendizado</h3>
+                    <p class="text-sm text-gray-600">Reflita sobre aprendizados recentes. Valorize o crescimento contínuo.</p>
+                </div>
+                
+                <div class="flex items-center justify-center">
+                    <i data-feather="arrow-right" class="text-gray-400"></i>
+                </div>
+                
+                <div class="step-card bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <span class="text-green-500 font-bold text-xl">5</span>
+                    </div>
+                    <h3 class="font-bold text-dark mb-2">Feedback</h3>
+                    <p class="text-sm text-gray-600">Peça feedback sobre sua gestão. Mostre abertura para melhorar.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-blue-50 p-8">
+                        <h3 class="text-xl font-bold text-dark mb-4">Dicas para implementação</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                                    <i data-feather="clock"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">Respeite rigorosamente os 15 minutos. Isso cria disciplina e valoriza o tempo de todos.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                                    <i data-feather="calendar"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">Agende todas as reuniões no mesmo dia da semana. Crie uma rotina previsível.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                                    <i data-feather="pen-tool"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">Use nosso template de anotações para registrar insights e acompanhar progressos.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                                    <i data-feather="heart"></i>
+                                </div>
+                                <p class="ml-3 text-gray-600">Mostre empatia genuína. Esse não é um momento para críticas, mas para apoio.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <h3 class="text-xl font-bold text-dark mb-4">Benefícios comprovados</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-dark mb-2">+40% Produtividade</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-primary h-2.5 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-dark mb-2">+35% Engajamento</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-secondary h-2.5 rounded-full" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-dark mb-2">-60% Turnover</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-purple-600 h-2.5 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-dark mb-2">+50% Clareza</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 72%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-bold text-dark mb-4">Perguntas Frequentes</h3>
+                <div class="divide-y divide-gray-200">
+                    <div class="py-4">
+                        <h4 class="font-medium text-dark mb-2">Posso adaptar as perguntas para minha equipe?</h4>
+                        <p class="text-gray-600">Sim, você pode personalizar as perguntas, mas recomendamos manter a estrutura básica de energia, prioridades, obstáculos, aprendizado e feedback.</p>
+                    </div>
+                    <div class="py-4">
+                        <h4 class="font-medium text-dark mb-2">E se 15 minutos não forem suficientes?</h4>
+                        <p class="text-gray-600">A disciplina do tempo é essencial. Se um tópico requer mais atenção, agende uma conversa separada. O 15/5 é para check-ins semanais, não para discussões profundas.</p>
+                    </div>
+                    <div class="py-4">
+                        <h4 class="font-medium text-dark mb-2">Como lidar com colaboradores que não se abrem?</h4>
+                        <p class="text-gray-600">Construa confiança com o tempo. Comece compartilhando primeiro e mostrando vulnerabilidade. A consistência é chave - após algumas semanas, a maioria se sente mais confortável.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (sidebar.classList.contains('sidebar-expanded')) {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                mainContent.classList.add('ml-20');
+                mainContent.classList.remove('ml-64');
+                this.innerHTML = '<i data-feather="chevron-right" class="w-5 h-5"></i>';
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                mainContent.classList.remove('ml-20');
+                mainContent.classList.add('ml-64');
+                this.innerHTML = '<i data-feather="chevron-left" class="w-5 h-5"></i>';
+            }
+            
+            feather.replace();
+        });
+        // Add button event listeners
+        document.getElementById('notificationsButton').addEventListener('click', function() {
+            alert('Notificações serão mostradas aqui');
+        });
+
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (sidebar.classList.contains('sidebar-expanded')) {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                mainContent.classList.add('ml-20');
+                mainContent.classList.remove('ml-64');
+                this.innerHTML = '<i data-feather="chevron-right" class="w-5 h-5"></i>';
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                mainContent.classList.remove('ml-20');
+                mainContent.classList.add('ml-64');
+                this.innerHTML = '<i data-feather="chevron-left" class="w-5 h-5"></i>';
+            }
+            
+            feather.replace();
+        });
+
+        feather.replace();
+    </script>
+</body>
+</html>

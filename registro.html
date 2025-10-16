@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registre-se | RegimeSync</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .btn-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i data-feather="users" class="h-8 w-8 text-primary"></i>
+                        <span class="ml-2 text-xl font-bold text-dark">RegimeSync</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-dark">Crie sua conta</h2>
+                <p class="text-gray-600">Experimente gratuitamente por 30 dias</p>
+            </div>
+            
+            <form id="registerForm" class="space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">Nome</label>
+                        <input type="text" id="firstName" name="firstName" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700">Sobrenome</label>
+                        <input type="text" id="lastName" name="lastName" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="company" class="block text-sm font-medium text-gray-700">Empresa</label>
+                    <input type="text" id="company" name="company" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                    <input type="password" id="password" name="password" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    <p class="mt-1 text-xs text-gray-500">Mínimo de 8 caracteres</p>
+                </div>
+                
+                <div>
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirme a Senha</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center">
+                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                    <label for="terms" class="ml-2 block text-sm text-gray-700">
+                        Concordo com os <a href="#" class="text-primary hover:text-blue-700">Termos de Serviço</a> e <a href="#" class="text-primary hover:text-blue-700">Política de Privacidade</a>
+                    </label>
+                </div>
+                <button id="registerButton" type="submit" class="w-full btn-hover bg-primary hover:bg-blue-600 text-white py-2 px-4 rounded-md transition">
+Criar Conta
+                </button>
+                
+                <div class="text-center text-sm text-gray-600">
+                    Já tem uma conta? <a href="login.html" class="text-primary hover:text-blue-700">Faça login</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('A senha deve ter pelo menos 8 caracteres!');
+                return;
+            }
+            
+            // Here you would normally send the form data to your server
+            alert('Conta criada com sucesso! Redirecionando para o dashboard...');
+            window.location.href = 'dashboard.html';
+        });
+        // Add button event listener
+        document.getElementById('registerButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('A senha deve ter pelo menos 8 caracteres!');
+                return;
+            }
+            
+            alert('Conta criada com sucesso! Redirecionando para o dashboard...');
+            window.location.href = 'dashboard.html';
+        });
+
+        feather.replace();
+    </script>
+</body>
+</html>
